@@ -1,0 +1,71 @@
+---
+title: Deliver us from dependency hell
+date: "2020-21-08"
+tags: ["JavaScript", "npm", "node"]
+---
+
+_Most modern services and applications have a mass of dependencies that live in an ever-growing `node-modules` folder. Generally a lot of these libraries are being actively maintained, changed, and updated. If your dependencies are poorly managed, you can quickly find yourself in dependency hell._
+
+**If you're unfamiliar with npm, [check it out here](https://www.npmjs.com/) before reading on**
+
+---
+
+## 🛒 Grocery Shopping
+
+When starting up a node application, one of the first steps is running `npm install`. When you run this, node will check for a file called `package.json` in the base of your project. If that file is found, it will use the `dependency` section as a kind of "grocery shopping list" to go and gather "ingredients" (code bits) your application requires.
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/irv5d0ev1hkbfbnpacn8.png)
+The "grocery store" in this case is something npm calls a `registry`. By default, your node app will look in the public npm registry for these packages, where most everything you need will be (private registries can be created for proprietary code and whatnot). If the package is found in the registry, node puts that "ingredient" into a `node_modules` directory at the base of your project.
+
+> _It's important to note that packages that you require may have their own "shopping list" (package.json), and all of those nested dependencies must be resolved before your app moves on to the next dependency in its own package.json._
+
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/fe0h8vkw0jqhmsx8bk6h.gif)
+
+---
+
+## ⬆️ Versions, 🥕 Carets, and 🃏 Wildcards
+
+The versions of your dependencies are generally something like `v1.3.5`. This is called **semantic versioning**, or semver. With semver, the numbers represent changes to the code in varying severity - `MAJOR.MINOR.PATCH`.
+From their docs -
+
+> MAJOR version when you make incompatible API changes,
+> MINOR version when you add functionality in a backwards compatible manner, and
+> PATCH version when you make backwards compatible bug fixes.
+
+With this in mind, a lot of people want to automatically update their app with any fresh new stuff their dependencies might have in newer, _non-breaking_ changes.
+
+> Prefixing with tilde `~` will give you any new `PATCH` updates, but not major or minor. So `~1.3.1` could install `1.3.9`, but not `1.4.0`
+
+> Prefixing with caret `^` will give you any new `PATCH` _and_ `MINOR` versions, but not major. So `^1.3.1` could install `1.4.9` but not `1.5.0` > ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/lyfok6d7l3ib2lgi5t7u.gif) > ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/frb2wpeqfv90ch9f6t9l.gif)
+
+Let's take a look at our example code's dependency tree:
+
+```
+my-breakfast
+     |
+     |
+    milk
+     |
+     |
+coffee-script
+```
+
+Ok, more like a _stick_, but hopefully the chain of dependency is clear. Our package.json is requiring version `v0.5.0` _specifically_ of `milk`, but milk is requiring `coffee-script` anywhere from `0.9.6` - `1.0.0`. `npm install` is run, we develop our app, everything is hunky-dory.
+
+📼 Now let's fast-forward 2 months. Someone finds your project and wants to contribute. They fork and clone your repo, run `npm install`, aaaaand it doesn't work. "But it worked on my machine!" you cry. When your collaborator installed the node modules, they were guaranteed a specific version of `milk`, but they got a _different_ version of `coffee-script` because `milk`'s package.json used semver.
+
+## 🗿 Setting your dependencies in stone
+
+One solution to this is to use a `package-lock.json` file. This file gives you _very_ granular control over the versions of **every** dependency that you install. If your `package.json` is like the shopping list, then your `package-lock.json` is like a budget. You can have cereal, but it's gonna be store brand instead of Cap'n Crunch. This specificity runs all the way down every branch of your dependency tree. You must have a `package.json` if you want to use a lock file (the `package.json` does a lot more than just dependency management, that's just the focus of this post).
+
+## 🎁 Wrapping up
+
+I personally feel that a `package-lock.json` file should always be used (in newer versions of npm, it is actually automatically generated). It just makes everything more reliable across environments and deployments. Here's some last little nuggets to hopefully help out when it comes to dependecies:
+
+- _`npm install --save` will automatically update your lockfile and package.json with that package._
+- _`npm ci` instead of just `npm install` will automatically rebuild your node modules, and build from your lockfile. It's a really helpful command for CI/CD and generally best to use in tandem with a lockfile._
+- _For larger projects, and super robust dependency, check out docker and containers. It can function almost like a virtual machine that perfectly contains your code and it's dependencies, and is cloned to promote to different environments. So hopefully you end up with a lot less "it worked on my machine" kind of issues._
+
+Thanks for reading all! Let me know in the comments if I made any egregious errors or left something important out.
+![Han Solo see you in hell!](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FEkSOkZYz8rwrK%2Fgiphy.gif&f=1&nofb=1)
+
+`MTFBWY`

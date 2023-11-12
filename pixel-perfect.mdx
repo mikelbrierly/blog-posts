@@ -1,0 +1,86 @@
+---
+title: Pixel Perfect
+date: "2020-23-09"
+tags: ["CSS"]
+---
+
+_CSS is a powerful, intricate language that gives the web beauty and life. **But** it also can make you want to throw your computer out of a four story window and never touch the front-end again._
+
+---
+
+Most frustration with CSS comes from a lack of understanding, which makes sense since it is often taught as an afterthought of web development. If CSS was treated like a language rather than a coat of paint, I think we would appreciate its value more.
+
+![gold pixel art coins displayed in a row](https://dev-to-uploads.s3.amazonaws.com/i/436vfjfyimyrzgvhcesc.png)
+
+All of the CSS we write eventually boils down to pixels displayed on a screen for our users to see and engage with. But the term `pixel` can be misleading when we are talking about the values in our stylesheets. It stands to reason that a "pixel" would be the smallest visible quantity that can be displayed on a screen. But in reality, a pixel is just... really small. (1/96 of an inch apparently, but who's counting)
+
+[Here's what the spec says](https://www.w3.org/TR/css-values-3/#reference-pixel):
+
+> _The reference pixel is the visual angle of one pixel on a device with a pixel density of 96dpi and a distance from the reader of an arm's length. For a nominal arm's length of 28 inches, the visual angle is therefore about 0.0213 degrees._
+
+![Woman looking confused as math equations float all around her head](https://i.imgflip.com/1j9mu4.jpg)
+
+---
+
+I was not enlightened by that explanation, so I took some bigfoot-esque photos of different physical screens displaying a single yellow CSS pixel.
+
+![an older LG Monitor, an iPhone 8+, and a 2018 15" MacBook pro all displaying a single CSS pixel](https://dev-to-uploads.s3.amazonaws.com/i/9jvv03o0wg8c4y9rutts.jpg)
+
+###### _That's an older LG Monitor, an iPhone 8+, and a 2018 15" MacBook pro._
+
+It looks like our 1 css pixel equated to: 1 screen px for the LG, maybe around 6 or 8 for the iPhone, and 4 screen px for the MacBook. That's just conjecture though, this is the important part:
+![An image saying "device pixel does not equal css pixel](https://dev-to-uploads.s3.amazonaws.com/i/f0vqz5g06g3198u2oqok.png)
+
+---
+
+## So what?
+
+It's important to understand how our tools work, and when it is best to reach for them. `px` isn't the only fish in the sea.
+
+> The CSS `px` value should be used when you need an absolute unit of measurement for an element that will not fluctuate in size on your page. (Or it will change very little)
+
+---
+
+There are _other_ units of measurement in CSS that can offer flexibility and responsiveness in ways that `px` fails to.
+
+```
+div {
+  height: 10em;
+}
+
+div {
+  height: 10rem;
+}
+
+div {
+  height: 10vh;
+}
+
+div {
+  height: 10%;
+}
+```
+
+`em`: _Font size of the parent element_
+
+`rem`: _Font size of the root element_
+
+`vh`: _1% of the viewport's height_
+
+`%`: _Usually a percentage of the nearest "sized" parent element_ (There are a lot of caveats to this one)
+
+---
+
+![a gold pixel art crown](https://i.imgur.com/Ku4dKRH.png)
+
+In my personal opinion, if you need a unit of CSS measurement that offers the most flexibility _and_ control, `rem` wins hands down. It is more predictable than `em`, and makes responsiveness a breeze when changing layouts or sizes for different screens. I won't get into the weeds here, it was **very** thoroughly explained in [this wonderful article](https://www.sitepoint.com/understanding-and-using-rem-units-in-css/).
+
+Hopefully you have a little extra nugget of knowledge when it comes to CSS units of measurement, cheers! 🍻
+
+---
+
+<div style="text-align: center;">
+  Pixel art by <a href="http://clintbellanger.net/">Clint Bellanger</a>
+</div>
+
+`MTFBWY`
