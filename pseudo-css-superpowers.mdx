@@ -1,0 +1,56 @@
+---
+title: What were your knowledge gaps when you started your career?
+date: "2020-20-07"
+tags: ["CSS"]
+---
+
+When folks are learning HTML, CSS, and web development in general, the concepts of elements, classes, and selectors are all taught early on, and often grasped quickly. But what about their weird, colon-prefixed cousins that are often avoided and misunderstood?
+
+---
+
+## Let's recap some foundational pieces:
+
+- An `element` is an HTML tag. Any valid markup with `<brackets>` is an `element`.
+
+- A CSS `class` is an identifier you give to one or more `element`.
+
+- A CSS `selector` can be used to access HTML `elements` by their `class`.
+
+![Lloyd sarcastically mouthing "uh yeah" from Dumb and Dumber](https://dev-to-uploads.s3.amazonaws.com/i/vfk1tgi2ax37kvs5152d.gif)
+
+---
+
+## Let's get into it:
+
+- A `pseudo-class` targets the _state_ of an `element` rather than the element itself.
+  ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/uzit6l0bz7utfuyiz0kb.png)
+  Pseudo-classes always (should) follow a CSS `selector` and are preceded by a single colon `:`.
+
+---
+
+- A `pseudo-element` is an "invisible" element originating from your CSS that is intended purely for styling purposes. (It does not become part of the DOM)
+  ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/oejwhvwbbu3087ptzrss.png)
+  Pseudo-elements always (should) follow a CSS selector and are preceded by two colons `::`.
+
+---
+
+_Here's what that would look like in the wild:_
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/tiijxzawyfjhau4srxaw.gif)
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/yn5sfzxhlwn5lxeii61x.gif)
+☝️ _Those are some big honkin gifs, so give 'em a sec_
+
+And after those updates, the HTML in the inspector will show this:
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/c86q167h8mvabh2ojhp8.png)
+
+---
+
+`::before` and `::after` are unique in the sense that they accept a "content" property. Without this property, the pseudo-element will not be style-able by your CSS. Often you will see `content: ""` if the pseudo-element is _only_ needed for styling. This is called [generated content](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Generated_Content).
+
+---
+
+If you hear the term `pseudo-selector`, it is an umbrella term covering both pseudo-element-selectors and pseudo-class-selectors. You can always tell the difference by checking to see how many colons there are. One for pseudo-class, two for pseudo-element.
+
+> _caveat from MDN:
+> As a rule, double colons (::) should be used instead of a single colon (:). This distinguishes pseudo-classes from pseudo-elements. However, since this distinction was not present in older versions of the W3C spec, most browsers support both syntaxes for the original pseudo-elements._
+
+### Thanks for reading! If you're interested in learning more, [MDN](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Pseudo-classes_and_pseudo-elements) has all the goodies (as per usual). 🍻
