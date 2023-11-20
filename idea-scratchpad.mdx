@@ -1,0 +1,25 @@
+---
+title: A brutally honest look back at the beginning of my career
+date: "2020-20-07"
+tags: ["career", "webdev"]
+published: false
+---
+
+# JS mutation and variable re-assignment. This somehow still trips me up.
+
+```
+let arr = [9, 'a', true];
+
+let newArr = arr;
+
+newArr[0] = 'changed';
+
+console.log(arr) // -> ['changed', 'a', true]
+
+console.log(arr === newArr) // -> true
+```
+
+both `arr` and `newArr` are pointing to the _exact_ same object in memory, so their equality is complete.
+It doesn't matter that the variables are different, the equality check is looking to see which exact object is being referenced, and in this case it's the same.
+
+To duplicate _without_ mutation, we can use the `spread` operator, `slice()`, `Array.from(arr)`, and `.concat()`
